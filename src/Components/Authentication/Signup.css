@@ -1,0 +1,106 @@
+/* Wrapper for the Auth Form */
+.WrapperAuth {
+  max-width: 400px;
+  text-align: center;
+  font-family: Arial, sans-serif;
+}
+
+/* Form Title */
+.WrapperAuth h1 {
+  color: #333;
+  margin-bottom: 20px;
+  font-size: 28px;
+}
+
+/* Form Inputs */
+.WrapperAuth input[type="text"],
+.WrapperAuth input[type="password"] {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+  font-size: 16px;
+}
+
+/* Radio Buttons */
+.WrapperAuth input[type="radio"] {
+  margin-right: 5px;
+}
+
+.WrapperAuth label {
+  font-size: 14px;
+  color: #555;
+  margin-right: 15px;
+}
+
+/* Submit Button */
+.WrapperAuth button {
+  background-color: #4caf50;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s;
+}
+
+.WrapperAuth button:hover {
+  background-color: #45a049;
+}
+.genderSection {
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.radioContainer {
+  display: inline-block;
+  position: relative;
+  padding-left: 30px;
+  cursor: pointer;
+  font-size: 18px;
+  user-select: none;
+}
+
+.radioContainer input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 20px;
+  width: 20px;
+  background-color: #ccc;
+  border-radius: 50%;
+}
+
+.radioContainer input:checked ~ .checkmark {
+  background-color: black;
+}
+
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+.radioContainer input:checked ~ .checkmark:after {
+  display: block;
+}
+
+.radioContainer .checkmark:after {
+  top: 5px;
+  left: 5px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: white;
+}
