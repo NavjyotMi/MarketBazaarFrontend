@@ -10,9 +10,20 @@ const productapi = createApi({
     getProductInfo: builder.query({
       query: (id) => ({ url: `/product/${id}` }),
     }),
+    getSearchedProduct: builder.query({
+      query: (params) => ({ url: `/search/?${params}` }),
+    }),
+    getCategory: builder.query({
+      query: () => ({ url: "/product/category" }),
+    }),
   }),
 });
 
-export const { useGetProductQuery, useGetProductInfoQuery } = productapi;
+export const {
+  useGetProductQuery,
+  useGetProductInfoQuery,
+  useGetSearchedProductQuery,
+  useGetCategoryQuery,
+} = productapi;
 
 export default productapi;

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -8,7 +8,16 @@ const Navbar = () => {
   const user = useSelector((state) => state.user.id);
   const role = useSelector((state) => state.user.role);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [search, setSearch] = useState("");
+  const navigate = useNavigate();
 
+  function searchChangeHandler(e) {
+    console.log(e.target.value);
+    setSearch(e.target.value);
+  }
+  function buttonClickHandler() {
+    navigate(`/search/?search=${search}`);
+  }
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY > 0) {
@@ -42,9 +51,13 @@ const Navbar = () => {
             <input
               type="text"
               placeholder="Search..."
+              onChange={searchChangeHandler}
               className="w-full px-3 py-1 rounded-l-full text-black border border-gray-300 focus:outline-none"
             />
-            <button className="bg-blue-600 text-white px-4 py-1 rounded-r-full">
+            <button
+              className="bg-blue-600 text-white px-4 py-1 rounded-r-full cursor-pointer"
+              onClick={buttonClickHandler}
+            >
               🔍
             </button>
           </div>
@@ -136,9 +149,13 @@ const Navbar = () => {
             <input
               type="text"
               placeholder="Search..."
+              onChange={searchChangeHandler}
               className="w-full px-3 py-1 rounded-l-full text-black border border-gray-300 focus:outline-none"
             />
-            <button className="bg-blue-600 text-white px-4 py-1 rounded-r-full">
+            <button
+              onClick={buttonClickHandler}
+              className="bg-blue-600 text-white px-4 py-1 rounded-r-full cursor-pointer"
+            >
               🔍
             </button>
           </div>

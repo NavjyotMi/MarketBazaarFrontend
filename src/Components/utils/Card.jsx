@@ -3,9 +3,10 @@ import img from "../../assets/img.jpeg";
 import { Link } from "react-router-dom";
 
 function Card(props) {
-  let string = "0";
-
+  let string = "Not reviewed yet";
+  // console.log("this is card ", props);
   if (props.review?.length === !0) {
+    string = "";
     for (let i = 0; i < props.review.length(); i++) {
       string.concat("★");
     }
