@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
+import { setUser } from "../Redux/features/users/UserSlice";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -10,6 +11,7 @@ const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [search, setSearch] = useState("");
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   function searchChangeHandler(e) {
     console.log(e.target.value);
@@ -32,6 +34,13 @@ const Navbar = () => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
+
+  function logoutHandler() {
+    console.log("this is clicked");
+    localStorage.removeItem("token");
+    const clearUser = { id: "", fname: "", lname: "", role: "" };
+    dispatch(setUser(clearUser));
+  }
 
   return (
     <nav
@@ -78,7 +87,7 @@ const Navbar = () => {
             </Link>
             {user && (
               <Link
-                to="/cart"
+                to={`/cart/${user}`}
                 className="text-gray-800 hover:text-blue-600 cursor-pointer"
               >
                 Cart
@@ -112,6 +121,7 @@ const Navbar = () => {
             {user && (
               <Link
                 to="/"
+                onClick={logoutHandler}
                 className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700"
               >
                 Logout

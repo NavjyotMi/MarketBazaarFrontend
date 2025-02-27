@@ -1,14 +1,38 @@
 import React from "react";
 import img from "../../assets/img.jpeg";
 import { Link } from "react-router-dom";
-
+import { useSelector } from "react-redux";
+import { useAddCartMutation } from "../../Redux/features/Cart/cartApi";
 function Card(props) {
   let string = "Not reviewed yet";
   // console.log("this is card ", props);
+  const userid = useSelector((state) => state.user.id);
+  // console.log(userid);
   if (props.review?.length === !0) {
     string = "";
     for (let i = 0; i < props.review.length(); i++) {
       string.concat("★");
+    }
+  }
+
+  const [addCart] = useAddCartMutation();
+
+  async function addToCart() {
+    const obj = {
+      userId: userid,
+      productId: props.id,
+      name: props.name,
+      price: props.price,
+      quantity: 1,
+      imageUrl: props.image,
+      sellerId: props.seller,
+    };
+    console.log("i don't know", obj);
+    try {
+      await addCart(obj);
+      console.log(obj);
+    } catch (error) {
+      console.log(error);
     }
   }
   return (
@@ -31,7 +55,7 @@ function Card(props) {
       </Link>
       {/* Button at the bottom */}
       <button
-        onClick={() => console.log("Add to cart", props.id)}
+        onClick={addToCart}
         className="mt-auto w-full px-4 py-2 bg-blue-600 text-white rounded-b-2xl hover:bg-blue-700 transition duration-300"
       >
         Add to cart

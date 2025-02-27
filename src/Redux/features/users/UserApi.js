@@ -28,6 +28,14 @@ const userapi = createApi({
         },
       }),
     }),
+    getAllUserInfo: builder.query({
+      query: (token) => ({
+        url: "/aboutme",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }),
+    }),
   }),
 });
 
@@ -35,5 +43,6 @@ export const {
   useSignupUserMutation,
   useGetUserInfoQuery,
   useLoginUserMutation,
+  useGetAllUserInfoQuery,
 } = userapi;
 export default userapi;

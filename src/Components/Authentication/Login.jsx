@@ -36,7 +36,7 @@ const Login = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     if (userInfo) {
-      console.log(userInfo);
+      // console.log(userInfo);
       const userObj = {
         id: userInfo.user._id,
         fname: userInfo.user.fname,
