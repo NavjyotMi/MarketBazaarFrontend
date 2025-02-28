@@ -38,6 +38,13 @@ const cartApi = createApi({
         body: credential,
       }),
     }),
+    deleteCart: builder.mutation({
+      query: (id) => ({
+        url: "/deletecart",
+        method: "DELETE",
+        body: id,
+      }),
+    }),
   }),
 });
 
@@ -46,6 +53,7 @@ export const {
   useGetCartQuery,
   useUpdateCartMutation,
   useDeleteItemMutation,
+  useDeleteCartMutation,
 } = cartApi;
 
 export default cartApi;

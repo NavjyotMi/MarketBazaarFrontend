@@ -1,37 +1,27 @@
 import React, { useEffect, useState } from "react";
 import {
   useGetAllUserInfoQuery,
-  useGetUserInfoQuery,
+  useUpdateUserInfoMutation,
 } from "../../Redux/features/users/UserApi";
-import { useRoutes } from "react-router-dom";
-// things i need to to
-// step--> get the jwt from the localstorage and then send the request to the backend ✅
-// step--2 display all the data ✅
-// step 3 with each data add a button which will edit the data if the user wants to edit
-// problem in this step
-// step 4 have a save button at the bottom which will update the about me then refetch the data and the display again
-
-// so i am not getting address phone number dob
 function Aboutme() {
   const [Edit, setEdit] = useState(false);
-  const [receivedData, setReceivedData] = useState("");
-  const [EditedData, setEditedData] = useState("");
   const [buttonClicked, setButtonClicked] = useState("");
   const [value, setValue] = useState({
     fname: "",
     lname: "",
     email: "",
-    phone: "",
-    address: "",
   });
-  const { data, isLoading, isError, error } = useGetAllUserInfoQuery(
+  const [userAddress, setAddress] = useState({
+    street: "",
+    city: "",
+    state: "",
+    zipCode: "",
+    country: "",
+  });
+  const { data, isLoading, isError, error, refetch } = useGetAllUserInfoQuery(
     localStorage.getItem("token")
   );
-
-  // if (data) {
-  //   setReceivedData(data);
-  //   console.log(data);
-  // }
+  const [updateUserInfo] = useUpdateUserInfoMutation();
 
   useEffect(() => {
     if (data) {
@@ -39,9 +29,17 @@ function Aboutme() {
         fname: data?.user?.fname || "",
         lname: data?.user?.lname || "",
         email: data?.user?.email || "",
-        phone: data?.user?.phone || "",
-        address: data.user?.address || "",
       };
+      if (data.user.address) {
+        const newadd = {
+          street: data.user.address.street,
+          city: data.user.address.city,
+          state: data.user.address.state,
+          zipcode: data.user.address.zipCode,
+          country: data.user.address.country,
+        };
+        setAddress(newadd);
+      }
       setValue(newObj);
     }
   }, [data]);
@@ -49,8 +47,13 @@ function Aboutme() {
   function ChangeHandler(e) {
     const { name, value } = e.target;
     console.log(name, value);
-
     setValue((prev) => ({ ...prev, [name]: value }));
+  }
+
+  function addChangeHandler(e) {
+    const { name, value } = e.target;
+    console.log(name, value);
+    setAddress((prev) => ({ ...prev, [name]: value }));
   }
 
   function editButtonHandler(e) {
@@ -65,93 +68,139 @@ function Aboutme() {
 
       setValue(obj);
     }
-    if (buttonClicked === "email") {
+
+    if (buttonClicked === "address") {
       const obj = { email: data.user.fname };
       setValue(obj);
     }
+
     setEdit(!Edit);
   }
 
-  function saveButtonHandler() {
-    if (value.fname.length === 0 || value.fname.length === 0) {
-      console.log("fields cannot be empty");
+  async function saveButtonHandler() {
+    const token = localStorage.getItem("token");
+    if (buttonClicked === "name") {
+      if (value.fname.length === 0 || value.fname.length === 0) {
+        console.log("fields cannot be empty");
+      } else {
+        setEdit(!Edit);
+        await updateUserInfo({ id: token, credential: value });
+        refetch();
+      }
     }
-    console.log(value);
+
+    if (buttonClicked === "address") {
+      console.log(userAddress);
+
+      const finalAddress = { address: userAddress };
+      updateUserInfo({ id: token, credential: finalAddress });
+      refetch();
+    }
+
+    setEdit((prev) => !prev);
   }
   return (
-    <div>
-      {data && (
-        <div>
-          <div>
-            <div>
-              <div>Personal Information</div>
+    <div className="flex justify-center items-center min-h-screen bg-gray-50 p-4">
+      <div className="max-w-md w-full bg-white shadow-lg rounded-2xl p-6 space-y-6">
+        {data && (
+          <div className="space-y-4">
+            <div className="flex justify-between items-center">
+              <h2 className="text-xl font-semibold text-gray-700">
+                Personal Information
+              </h2>
               <button
                 name="name"
                 onClick={editButtonHandler}
-                className="cursor-pointer"
+                className="text-blue-500 hover:text-blue-700 text-sm"
               >
                 Edit
               </button>
-              <div>
-                <input
-                  type="text"
-                  className="border-2 border-gray-500"
-                  name="fname"
-                  onChange={ChangeHandler}
-                  disabled={!(Edit && buttonClicked === "name")}
-                  value={value.fname}
-                />
-                <input
-                  type="text"
-                  onChange={ChangeHandler}
-                  name="lname"
-                  disabled={!(Edit && buttonClicked === "name")}
-                  value={value.lname}
-                />
-                {Edit && buttonClicked === "name" && (
-                  <input
-                    type="button"
-                    value="Save"
-                    onClick={saveButtonHandler}
-                  />
-                )}
-              </div>
             </div>
-          </div>
-          <div>
-            <div>Email Address</div>
-            <button name="email" onClick={editButtonHandler}>
-              Edit
-            </button>
-            <div>
+            <div className="space-y-2">
               <input
                 type="text"
-                name="email"
-                disabled={!(Edit && buttonClicked === "email")}
+                className="w-full border rounded-md p-2 text-sm"
+                name="fname"
                 onChange={ChangeHandler}
-                value={value.email}
+                disabled={!(Edit && buttonClicked === "name")}
+                value={value.fname}
+                placeholder="First Name"
               />
-              {Edit && buttonClicked === "email" && (
-                <input type="button" value="Save" onClick={saveButtonHandler} />
+              <input
+                type="text"
+                className="w-full border rounded-md p-2 text-sm"
+                name="lname"
+                onChange={ChangeHandler}
+                disabled={!(Edit && buttonClicked === "name")}
+                value={value.lname}
+                placeholder="Last Name"
+              />
+              {Edit && buttonClicked === "name" && (
+                <button
+                  className="w-full py-2 bg-blue-500 text-white rounded-md text-sm mt-2 hover:bg-blue-600 transition"
+                  onClick={saveButtonHandler}
+                >
+                  Save
+                </button>
               )}
             </div>
-            {/* <div>{data.user.email}</div> */}
           </div>
-          <div>
-            <div>Your Gender:</div>
-            <div>{data.user.gender}</div>
-          </div>
-          <div>
-            <div>Address:</div>
-            {data.user.address && <div>{data.user.address}</div>}
-          </div>
-          <div>
-            <div>Mobile Number:</div>
-            {data.user.phone && <div>{data.user.phone}</div>}
-          </div>
+        )}
+        <div className="space-y-4">
+          <h2 className="text-lg font-semibold text-gray-700">Email Address</h2>
+          <input
+            type="text"
+            name="email"
+            className="w-full border rounded-md p-2 text-sm"
+            disabled
+            value={value.email}
+          />
         </div>
-      )}
-      {/* <div>As of now nothing is in here</div> */}
+        <div className="space-y-4">
+          <div className="flex justify-between items-center">
+            <h2 className="text-lg font-semibold text-gray-700">Address</h2>
+            <button
+              name="address"
+              onClick={editButtonHandler}
+              className="text-blue-500 hover:text-blue-700 text-sm"
+            >
+              Edit
+            </button>
+          </div>
+          {!Edit && data?.user?.address && (
+            <div className="text-sm space-y-1 text-gray-600">
+              <div>Street: {userAddress.street}</div>
+              <div>City: {userAddress.city}</div>
+              <div>State: {userAddress.state}</div>
+              <div>Zipcode: {userAddress.zipCode}</div>
+              <div>Country: {userAddress.country}</div>
+            </div>
+          )}
+          {Edit && buttonClicked === "address" && (
+            <div className="space-y-2">
+              {["street", "city", "state", "zipCode", "country"].map(
+                (field) => (
+                  <input
+                    key={field}
+                    name={field}
+                    type="text"
+                    className="w-full border rounded-md p-2 text-sm"
+                    placeholder={field.charAt(0).toUpperCase() + field.slice(1)}
+                    onChange={addChangeHandler}
+                    value={userAddress[field]}
+                  />
+                )
+              )}
+              <button
+                className="w-full py-2 bg-blue-500 text-white rounded-md text-sm mt-2 hover:bg-blue-600 transition"
+                onClick={saveButtonHandler}
+              >
+                Save
+              </button>
+            </div>
+          )}
+        </div>
+      </div>
     </div>
   );
 }

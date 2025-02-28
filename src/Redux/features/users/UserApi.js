@@ -5,6 +5,7 @@ const userapi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: "http://127.0.0.1:4000/api/v1/user",
   }),
+
   endpoints: (builder) => ({
     signupUser: builder.mutation({
       query: (credentials) => ({
@@ -36,6 +37,16 @@ const userapi = createApi({
         },
       }),
     }),
+    updateUserInfo: builder.mutation({
+      query: ({ id, credential }) => ({
+        url: "/updateme",
+        body: credential,
+        method: "PUT",
+        headers: {
+          Authorization: `Bearer ${id}`,
+        },
+      }),
+    }),
   }),
 });
 
@@ -44,5 +55,6 @@ export const {
   useGetUserInfoQuery,
   useLoginUserMutation,
   useGetAllUserInfoQuery,
+  useUpdateUserInfoMutation,
 } = userapi;
 export default userapi;

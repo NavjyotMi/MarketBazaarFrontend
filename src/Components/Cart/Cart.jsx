@@ -1,18 +1,25 @@
 import React, { useState, useEffect } from "react";
-import { useGetCartQuery } from "../../Redux/features/Cart/cartApi";
+import {
+  useDeleteCartMutation,
+  useGetCartQuery,
+} from "../../Redux/features/Cart/cartApi";
 import { useParams } from "react-router-dom";
 // import {env}
 import CartCard from "./CartCard";
+import { useAddOrderMutation } from "../../Redux/features/Order/OrderApi";
 function Cart() {
   const id = useParams();
   const [payment, setPayment] = useState(false);
+
   const { data, isError, error, refetch } = useGetCartQuery(id.id);
+  const [deleteCart] = useDeleteCartMutation();
+  const [addOrder] = useAddOrderMutation();
   if (data) console.log(data);
   if (isError) console.log(error);
   useEffect(() => {
     refetch();
   }, []);
-  console.log(import.meta.env.VITE_RAZORPAY_KEY_ID);
+
   const openRazorpay = async () => {
     console.log("payment is hit", data?.cart?.totalPrice);
     const res = await fetch(
@@ -46,7 +53,7 @@ function Cart() {
 
         const result = await verifyRes.json();
         setPayment(true);
-        alert(result.message);
+        // alert(result.message);
       },
       prefill: {
         name: "John Doe",
@@ -59,7 +66,30 @@ function Cart() {
     const rzp = new Razorpay(options);
     rzp.open();
   };
-
+  // console.log("the payment is successfull", payment);
+  useEffect(() => {
+    if (data) {
+      const orderObj = {
+        userId: data?.cart?.userId,
+        shippingInfo: data?.userAdd?.address,
+        products: data?.cart?.items,
+        subtotal: data?.cart?.totalPrice,
+        totalAmount: data?.cart?.totalPrice,
+      };
+      console.log(orderObj);
+      addOrder({ id: localStorage.getItem("token"), credential: orderObj });
+      console.log(data.cart._id);
+      deleteCart(data.cart._id);
+      // setPayment(false);
+    }
+  }, [payment]);
+  function checkaddress() {
+    if (data.userAdd) {
+      openRazorpay();
+    } else {
+      alert("Please enter address first");
+    }
+  }
   return (
     <div className="flex justify-between p-4 gap-4">
       {/* Cart Items */}
@@ -100,7 +130,7 @@ function Cart() {
           <span>₹{data?.cart?.totalPrice}</span>
         </div>
         <button
-          onClick={openRazorpay}
+          onClick={checkaddress}
           className="w-full bg-blue-500 text-white py-2 rounded-md"
         >
           Order
