@@ -12,7 +12,7 @@ function ValueBar() {
   const navigate = useNavigate();
 
   const { data: categoryData, isError, error } = useGetCategoryQuery();
-
+  if (categoryData) console.log(categoryData);
   const categoryDisplay = searchParams.get("search") || "";
 
   function clickHandler(e) {
