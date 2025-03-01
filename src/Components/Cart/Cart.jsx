@@ -4,7 +4,6 @@ import {
   useGetCartQuery,
 } from "../../Redux/features/Cart/cartApi";
 import { useParams } from "react-router-dom";
-// import {env}
 import CartCard from "./CartCard";
 import { useAddOrderMutation } from "../../Redux/features/Order/OrderApi";
 function Cart() {

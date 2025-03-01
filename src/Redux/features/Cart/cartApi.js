@@ -22,18 +22,18 @@ const cartApi = createApi({
       }),
     }),
     getCart: builder.query({
-      query: (id) => ({ url: `${id}` }),
+      query: (id) => ({ url: `/${id}` }),
     }),
     updateCart: builder.mutation({
       query: ({ id, credentials }) => ({
-        url: `${id}`,
+        url: `/${id}`,
         method: "PUT",
         body: credentials,
       }),
     }),
     deleteItem: builder.mutation({
       query: ({ id, credential }) => ({
-        url: `${id}`,
+        url: `/${id}`,
         method: "DELETE",
         body: credential,
       }),
