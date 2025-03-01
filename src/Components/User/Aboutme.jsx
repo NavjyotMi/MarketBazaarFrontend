@@ -21,6 +21,7 @@ function Aboutme() {
   const { data, isLoading, isError, error, refetch } = useGetAllUserInfoQuery(
     localStorage.getItem("token")
   );
+  console.log(data);
   const [updateUserInfo] = useUpdateUserInfoMutation();
 
   useEffect(() => {
@@ -35,9 +36,10 @@ function Aboutme() {
           street: data.user.address.street,
           city: data.user.address.city,
           state: data.user.address.state,
-          zipcode: data.user.address.zipCode,
+          zipCode: data.user.address.zipCode,
           country: data.user.address.country,
         };
+        console.log(newadd);
         setAddress(newadd);
       }
       setValue(newObj);
@@ -179,11 +181,11 @@ function Aboutme() {
           {Edit && buttonClicked === "address" && (
             <div className="space-y-2">
               {["street", "city", "state", "zipCode", "country"].map(
-                (field) => (
+                (field, key) => (
                   <input
-                    key={field}
+                    key={key}
                     name={field}
-                    type="text"
+                    type={field === "zipCode" ? "number" : "text"}
                     className="w-full border rounded-md p-2 text-sm"
                     placeholder={field.charAt(0).toUpperCase() + field.slice(1)}
                     onChange={addChangeHandler}
