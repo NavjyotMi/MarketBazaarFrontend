@@ -1,26 +1,44 @@
-import { useState } from "react";
 import "./App.css";
 import "react-toastify/dist/ReactToastify.css";
-import { ToastContainer, toast } from "react-toastify";
-
-import Signup from "./Components/Authentication/Signup";
-import Login from "./Components/Authentication/Login";
+import { useEffect, } from "react";
+import { useDispatch } from "react-redux";
+import { ToastContainer } from "react-toastify";
+import { setUser } from "./Redux/features/users/UserSlice";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { useGetUserInfoQuery } from "./Redux/features/users/UserApi";
 import Home from "./Components/Home";
 import Footer from "./Components/Footer";
-import Layout from "./Components/utils/Layout";
-import ProductInfo from "./Components/Products/ProductInfo";
-import SearchProduct from "./Components/Products/SearchProduct";
-import Aboutme from "./Components/User/Aboutme";
 import Cart from "./Components/Cart/Cart";
-import VendorHome from "./Components/admin/VendorHome";
-import CreateProduct from "./Components/admin/CreateProduct";
-import AllProduct from "./Components/admin/AllProduct";
+import Layout from "./Components/utils/Layout";
+import Aboutme from "./Components/User/Aboutme";
 import DashBoard from "./Components/admin/DashBoard";
-import SingleProduct from "./Components/admin/SingleProduct";
+import Login from "./Components/Authentication/Login";
+import AllProduct from "./Components/admin/AllProduct";
+import VendorHome from "./Components/admin/VendorHome";
+import Signup from "./Components/Authentication/Signup";
 import SeeAllOrders from "./Components/admin/SeeAllOrders";
+import ProductInfo from "./Components/Products/ProductInfo";
+import SingleProduct from "./Components/admin/SingleProduct";
+import CreateProduct from "./Components/admin/CreateProduct";
+import SearchProduct from "./Components/Products/SearchProduct";
 
 function App() {
+  const Token = localStorage.getItem("token");
+  const dispatch = useDispatch();
+
+  const { data } = useGetUserInfoQuery(Token, { skip: !Token });
+
+  useEffect(() => {
+    if (data) {
+      const obj = {
+        id: data.user._id,
+        fname: data.user.fname,
+        lname: data.user.lname,
+        role: data.user.role,
+      };
+      dispatch(setUser(obj));
+    }
+  }, [data]);
   return (
     <>
       <ToastContainer />

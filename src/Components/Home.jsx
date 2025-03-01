@@ -8,23 +8,17 @@ import ValueBar from "./utils/ValueBar";
 import { useSearchParams } from "react-router-dom";
 const Home = () => {
   let { data, isLoading, isError } = useGetProductQuery();
-  // if (data) console.log(data);
   const [searchParams] = useSearchParams();
   const queryString = Array.from(searchParams.entries())
     .map(([key, value]) => `${key}=${value}`)
     .join("&");
-  // console.log(queryString);
   const {
     isError: isFilteredError,
     data: filteredData,
     error,
   } = useGetSearchedProductQuery(queryString);
-  if (isError) console.log(error);
+  if (isFilteredError) console.log(error);
   data = filteredData;
-  // if (data) {
-  //   // console.dir(data.data.products);
-  //   data.data.products.map((value) => console.log(value));
-  // }
 
   return (
     <>
