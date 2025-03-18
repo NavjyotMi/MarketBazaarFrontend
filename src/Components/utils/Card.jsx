@@ -1,23 +1,24 @@
 import React from "react";
-import img from "../../assets/img.jpeg";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useAddCartMutation } from "../../Redux/features/Cart/cartApi";
+import { ShoppingCart } from "lucide-react";
 function Card(props) {
-  let string = "Not reviewed yet";
+  // let string = "Not reviewed yet";
   // console.log("this is card ", props);
   const userid = useSelector((state) => state.user.id);
   // console.log(userid);
-  if (props.review?.length === !0) {
-    string = "";
-    for (let i = 0; i < props.review.length(); i++) {
-      string.concat("★");
-    }
-  }
+  // if (props.review?.length === !0) {
+  //   string = "";
+  //   for (let i = 0; i < props.review.length(); i++) {
+  //     string.concat("★");
+  //   }
+  // }
 
   const [addCart] = useAddCartMutation();
 
   async function addToCart() {
+    console.log("the cart button is clicked");
     const obj = {
       userId: userid,
       productId: props.id,
@@ -36,30 +37,43 @@ function Card(props) {
     }
   }
   return (
-    <div className="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300 flex flex-col h-full">
-      {/* Wrap all clickable parts inside Link */}
-      <Link to={`/product/${props.id}`} className="block flex-grow">
-        <img
-          src={props.image}
-          alt="product"
-          className="w-full h-48 object-cover"
-        />
-        <div className="p-4 flex flex-col items-start">
-          <div className="text-yellow-500 text-sm">{string}</div>
-          <div className="font-semibold text-lg mt-2">{props.name}</div>
-          <div className="text-gray-600 text-sm">
-            Price: <span className="line-through text-red-500">$199</span> $
-            {props.price}
+    <div className="bg-white overflow-hidden  flex flex-col h-full">
+      <div className="block flex-grow group relative overflow-hidden">
+        <Link
+          to={`/product/${props.id}`}
+          className="block flex-grow group relative overflow-hidden"
+        >
+          <div className="bg-gray-200">
+            <img
+              src={props.image}
+              alt="product"
+              className="w-full h-[25rem] object-cover transition-transform duration-500 group-hover:translate-x-2 group-hover:brightness-75 group-hover:saturate-150"
+            />
           </div>
-        </div>
-      </Link>
-      {/* Button at the bottom */}
-      <button
-        onClick={addToCart}
-        className="mt-auto w-full px-4 py-2 bg-blue-600 text-white rounded-b-2xl hover:bg-blue-700 transition duration-300"
-      >
-        Add to cart
-      </button>
+
+          <div className="flex flex-row justify-between py-4">
+            <div className="space-y-2">
+              <div className="text-lg mt-2 tracking-normal">{props.name}</div>
+              <div className="text-gray-600 text-sm">
+                ₹ {props.price} -
+                <span className="line-through text-purple-500"> ₹ 199</span>
+              </div>
+            </div>
+            <div>
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  e.preventDefault();
+                  addToCart();
+                }}
+                className=" cursor-pointer hover:text-purple-500"
+              >
+                <ShoppingCart strokeWidth={1.25} hover:stroke-purple-500 />
+              </button>
+            </div>
+          </div>
+        </Link>
+      </div>
     </div>
   );
 }

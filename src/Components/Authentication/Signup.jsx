@@ -112,75 +112,80 @@ const Signup = () => {
     <>
       <WrapperAuth>
         <div className="WrapperAuth">
-          <h1>.SIGNUP</h1>
-          <form onSubmit={submitHandler}>
-            <input
-              type="text"
-              name="fname"
-              placeholder="Enter your first name"
-              value={formdata.fname}
-              onChange={formChangeHandler}
-            />
-            {errors.fname && <p className="error">{errors.fname}</p>}
-            <input
-              type="text"
-              name="lname"
-              placeholder="Enter your last name"
-              value={formdata.lname}
-              onChange={formChangeHandler}
-            />
-            {errors.lname && <p className="error">{errors.lname}</p>}
-            <input
-              type="text"
-              name="email"
-              placeholder="Enter your email name"
-              value={formdata.email}
-              onChange={formChangeHandler}
-            />
-            {errors.email && <p className="error">{errors.email}</p>}
-            <input
-              type="password"
-              name="password"
-              placeholder="Enter password name"
-              value={formdata.password}
-              onChange={formChangeHandler}
-            />
-            {errors.password && <p className="error">{errors.password}</p>}
-            <input
-              name="confirmpassword"
-              type="password"
-              placeholder="Enter confirm password name"
-              value={formdata.confirmpassword}
-              onChange={formChangeHandler}
-            />
-            {errors.password && <p className="error">{errors.password}</p>}
-            <div className="genderSection">
-              <h4>Select Gender:</h4>
-              <label className="radioContainer">
-                Male
-                <input
-                  type="radio"
-                  name="gender"
-                  value="male"
-                  checked={formdata.gender === "male"}
-                  onChange={formChangeHandler}
-                />
-                <span className="checkmark"></span>
-              </label>
-              <label className="radioContainer">
-                Female
-                <input
-                  type="radio"
-                  name="gender"
-                  value="female"
-                  checked={formdata.gender === "female"}
-                  onChange={formChangeHandler}
-                />
-                <span className="checkmark"></span>
-              </label>
-            </div>
-            <button type="submit">.Signup</button>
-          </form>
+          <div className="innerclass">
+            <h1 className="logo">.MARKETBAZAAR</h1>
+            <h3>Hope you Enjoy!!!</h3>
+
+            <h1>Sign Up</h1>
+            <form onSubmit={submitHandler}>
+              <input
+                type="text"
+                name="fname"
+                placeholder="Enter your first name"
+                value={formdata.fname}
+                onChange={formChangeHandler}
+              />
+              {errors.fname && <p className="error">{errors.fname}</p>}
+              <input
+                type="text"
+                name="lname"
+                placeholder="Enter your last name"
+                value={formdata.lname}
+                onChange={formChangeHandler}
+              />
+              {errors.lname && <p className="error">{errors.lname}</p>}
+              <input
+                type="text"
+                name="email"
+                placeholder="Enter your email name"
+                value={formdata.email}
+                onChange={formChangeHandler}
+              />
+              {errors.email && <p className="error">{errors.email}</p>}
+              <input
+                type="password"
+                name="password"
+                placeholder="Enter password name"
+                value={formdata.password}
+                onChange={formChangeHandler}
+              />
+              {errors.password && <p className="error">{errors.password}</p>}
+              <input
+                name="confirmpassword"
+                type="password"
+                placeholder="Enter confirm password name"
+                value={formdata.confirmpassword}
+                onChange={formChangeHandler}
+              />
+              {errors.password && <p className="error">{errors.password}</p>}
+              <div className="genderSection">
+                <h4>Gender:</h4>
+                <label className="radioContainer">
+                  Male
+                  <input
+                    type="radio"
+                    name="gender"
+                    value="male"
+                    checked={formdata.gender === "male"}
+                    onChange={formChangeHandler}
+                  />
+                  <span className="checkmark"></span>
+                </label>
+                <label className="radioContainer">
+                  Female
+                  <input
+                    type="radio"
+                    name="gender"
+                    value="female"
+                    checked={formdata.gender === "female"}
+                    onChange={formChangeHandler}
+                  />
+                  <span className="checkmark"></span>
+                </label>
+              </div>
+              <button type="submit">Sign up</button>
+            </form>
+          </div>
         </div>
       </WrapperAuth>
     </>

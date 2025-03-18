@@ -57,17 +57,20 @@ function ValueBar() {
   }
 
   return (
-    <div>
-      <div className="p-4 bg-white rounded-2xl mb-6 flex flex-row space-x-8 items-center border-t border-b border-black">
+    <div className="px-10">
+      <div className="p-4 bg-white shadow-md rounded-2xl mb-6 flex flex-row items-center space-x-8">
         {categoryDisplay === "" && (
-          <div className="flex flex-col">
-            <label htmlFor="category" className="text-lg font-semibold mb-1">
-              Category
+          <div className="flex items-center space-x-3">
+            <label
+              htmlFor="category"
+              className="text-base font-medium text-gray-700"
+            >
+              Category:
             </label>
             <select
               name="category"
               id="category"
-              className="p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+              className="p-2 bg-gray-100 rounded-lg focus:ring-2 focus:ring-blue-400"
               onChange={clickHandler}
             >
               <option value="all">All Categories</option>
@@ -80,41 +83,42 @@ function ValueBar() {
           </div>
         )}
 
-        <div className="flex flex-col">
-          <label className="text-lg font-semibold mb-1">Price Range</label>
-          <div className="flex flex-row items-center space-x-4">
-            <div className="text-sm text-gray-600">Min:</div>
+        {/* Price Range */}
+        <div className="flex items-center space-x-3">
+          <label className="text-base font-medium text-gray-700">
+            Price Range:
+          </label>
+          <div className="flex items-center space-x-2">
+            <span className="text-sm text-gray-500">Min:</span>
             <input
               type="number"
               name="min"
+              className="w-20 p-2 bg-gray-100 rounded-lg focus:ring-2 focus:ring-blue-400"
               onChange={clickHandler}
-              onKeyDown={(e) => {
-                if (e.key === "Enter") {
-                  clickHandler(e);
-                }
-              }}
+              onKeyDown={(e) => e.key === "Enter" && clickHandler(e)}
               value={minValue}
             />
-            <div className="text-sm text-gray-600">Max:</div>
+            <span className="text-sm text-gray-500">Max:</span>
             <input
               type="number"
               name="max"
-              value={maxValue}
+              className="w-20 p-2 bg-gray-100 rounded-lg focus:ring-2 focus:ring-blue-400"
               onChange={clickHandler}
+              value={maxValue}
             />
           </div>
         </div>
 
         {/* Sort Filter */}
-        <div className="flex flex-col">
-          <label htmlFor="sort" className="text-lg font-semibold mb-1">
-            Sort By
+        <div className="flex items-center space-x-3">
+          <label htmlFor="sort" className="text-base font-medium text-gray-700">
+            Sort By:
           </label>
           <select
             name="sort"
             id="sort"
             onChange={clickHandler}
-            className="p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+            className="p-2 bg-gray-100 rounded-lg focus:ring-2 focus:ring-blue-400"
           >
             <option value="">Select</option>
             <option value="inc">Price Low to High</option>

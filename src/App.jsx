@@ -1,16 +1,17 @@
 import "./App.css";
 import "react-toastify/dist/ReactToastify.css";
-import { useEffect, } from "react";
+import { Suspense, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { ToastContainer } from "react-toastify";
 import { setUser } from "./Redux/features/users/UserSlice";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { useGetUserInfoQuery } from "./Redux/features/users/UserApi";
 import Home from "./Components/Home";
+import Navbar from "./Components/Navbar";
 import Footer from "./Components/Footer";
 import Cart from "./Components/Cart/Cart";
-import Layout from "./Components/utils/Layout";
 import Aboutme from "./Components/User/Aboutme";
+import Skeleton from "./Components/utils/Skeleton";
 import DashBoard from "./Components/admin/DashBoard";
 import Login from "./Components/Authentication/Login";
 import AllProduct from "./Components/admin/AllProduct";
@@ -39,13 +40,15 @@ function App() {
       dispatch(setUser(obj));
     }
   }, [data]);
+
   return (
     <>
       <ToastContainer />
       <BrowserRouter
         future={{ v7_startTransition: true, v7_relativeSplatPath: true }}
       >
-        <Layout />
+        <Navbar />
+        <Suspense fallback={<Skeleton />}></Suspense>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />}></Route>
@@ -53,7 +56,7 @@ function App() {
           <Route path="/product/:id" element={<ProductInfo />}></Route>
           <Route path="/search" element={<SearchProduct />} />
           <Route path="/aboutme" element={<Aboutme />} />
-          <Route path="/cart/:id" element={<Cart />} />
+          <Route path="/cart" element={<Cart />} />
           <Route path="/vendor" element={<VendorHome />}>
             <Route path="createproduct" element={<CreateProduct />} />
             <Route path="products" element={<AllProduct />} />

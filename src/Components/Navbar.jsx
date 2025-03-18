@@ -2,6 +2,9 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { setUser } from "../Redux/features/users/UserSlice";
+import { Search } from "lucide-react";
+import { ShoppingCart } from "lucide-react";
+import { Heart } from "lucide-react";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -18,11 +21,11 @@ const Navbar = () => {
     setSearch(e.target.value);
   }
   function buttonClickHandler() {
-    navigate(`/search/?search=${search}`);
+    if (search.length != 0) navigate(`/search/?search=${search}`);
   }
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 0) {
+      if (window.scrollY > 100) {
         setIsScrolled(true);
       } else {
         setIsScrolled(false);
@@ -44,90 +47,106 @@ const Navbar = () => {
 
   return (
     <nav
-      className={`w-full transition-all duration-300 ${
+      className={`w-full transition-all duration-100 border border-gray-300 z-50  fixed top-0 left-0 ${
         isScrolled
-          ? "fixed top-0 left-0 bg-[#121519] shadow-lg"
-          : "relative bg-transparent mb-4"
+          ? "fixed top-0 left-0 bg-white shadow-md"
+          : "relative bg-transparent"
       }`}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="p-2 sm:px-6 lg:px-8 h-[5rem]">
         <div className="flex justify-between items-center h-16">
           <div className="text-2xl font-bold  text-gray-800">
-            <span className="block md:hidden">.mb</span>
-            <span className="hidden md:block">.MARKETBAZAAR</span>
-          </div>
-          <div className="hidden w-1/3 md:flex items-center w-1/2 relative">
-            <input
-              type="text"
-              placeholder="Search..."
-              onChange={searchChangeHandler}
-              className="w-full px-3 py-1 rounded-l-full text-black border border-gray-300 focus:outline-none"
-            />
-            <button
-              className="bg-blue-600 text-white px-4 py-1 rounded-r-full cursor-pointer"
-              onClick={buttonClickHandler}
-            >
-              🔍
-            </button>
+            <span>MarketBazaar</span>
           </div>
 
-          <button
-            className="text-gray-500 hover:text-gray-700 md:hidden"
-            onClick={() => setIsSearchOpen(!isSearchOpen)}
-          >
-            🔍
-          </button>
+          <div className="flex flex-column justify-between rounded-md bg-gray-200">
+            <div className="hidden sm:flex items-center relative max-[500px]:hidden">
+              <input
+                type="text"
+                placeholder="What are you looking for"
+                onChange={searchChangeHandler}
+                className="w-full px-3 py-1 text-black focus:outline-none"
+              />
+              <button
+                className=" text-black px-4 py-1 rounded-r-full cursor-pointer"
+                onClick={buttonClickHandler}
+              >
+                <Search />
+              </button>
+            </div>
+          </div>
 
-          <div className="hidden md:flex space-x-4 items-center">
+          <div className="hidden md:flex space-x-4 gap-4 items-center tracking-wide">
             <Link
               to="/"
-              className="text-gray-800 hover:text-blue-600 cursor-pointer"
+              className="relative group text-gray-700 hover:text-gray-900 cursor-pointer"
             >
               Home
+              <span className="absolute left-0 bottom-0 w-full h-[2px] bg-gray-900 transform scale-x-0 origin-left transition-all duration-300 group-hover:scale-x-100"></span>
             </Link>
             {user && (
               <Link
-                to={`/cart/${user}`}
-                className="text-gray-800 hover:text-blue-600 cursor-pointer"
+                to="/cart"
+                className="relative group text-gray-700 hover:text-gray-900"
               >
                 Cart
+                <span className="absolute left-0 bottom-0 w-full h-[2px] bg-gray-900 transform scale-x-0 origin-left transition-all duration-300 group-hover:scale-x-100"></span>
               </Link>
             )}
             {user && (
-              <Link to="/order" className="text-gray-800 hover:text-blue-600">
+              <Link
+                to="/order"
+                className=" relative group  text-gray-700 hover:text-gray-900"
+              >
                 Orders
+                <span className="absolute left-0 bottom-0 w-full h-[2px] bg-gray-900 transform scale-x-0 origin-left transition-all duration-300 group-hover:scale-x-100"></span>
               </Link>
             )}
 
             {user && (
-              <Link to="/aboutme" className="text-gray-800 hover:text-blue-600">
+              <Link
+                to="/aboutme"
+                className=" relative group text-gray-700 hover:text-gray-900"
+              >
                 About Me
+                <span className="absolute left-0 bottom-0 w-full h-[2px] bg-gray-900 transform scale-x-0 origin-left transition-all duration-300 group-hover:scale-x-100"></span>
               </Link>
             )}
             {role == "admin" && (
-              <Link to="/vendor" className="text-gray-800 hover:text-blue-600">
+              <Link
+                to="/vendor"
+                className="relative group text-gray-700 hover:text-gray-900"
+              >
                 Vendors
+                <span className="absolute left-0 bottom-0 w-full h-[2px] bg-gray-900 transform scale-x-0 origin-left transition-all duration-300 group-hover:scale-x-100"></span>
               </Link>
             )}
-
             {!user && (
               <Link
                 to="/login"
-                className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700"
+                className="relative group text-gray-700 text-black"
               >
-                Login/Signup
+                Login
+                <span className="absolute left-0 bottom-0 w-full h-[2px] bg-gray-900 transform scale-x-0 origin-left transition-all duration-300 group-hover:scale-x-100"></span>
               </Link>
             )}
             {user && (
               <Link
                 to="/"
                 onClick={logoutHandler}
-                className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700"
+                className="relative group text-black text-gray-700  "
               >
                 Logout
+                <span className="absolute left-0 bottom-0 w-full h-[2px] bg-gray-900 transform scale-x-0 origin-left transition-all duration-300 group-hover:scale-x-100"></span>
               </Link>
             )}
           </div>
+          <button
+            className="sm:hidden flex justify-center items-center text-gray-500 hover:text-gray-700"
+            onClick={() => setIsSearchOpen(!isSearchOpen)}
+          >
+            <Search />
+          </button>
           <div className="flex md:hidden items-center">
             <button
               onClick={() => setIsOpen(!isOpen)}
@@ -154,19 +173,19 @@ const Navbar = () => {
         </div>
       </div>
       {isSearchOpen && (
-        <div className="md:hidden bg-white shadow-md px-4 py-2">
+        <div className="md:hidden flex flex-col items-center justify-center w-full px-4 py-2 bg-gray-200">
           <div className="flex items-center">
             <input
               type="text"
               placeholder="Search..."
               onChange={searchChangeHandler}
-              className="w-full px-3 py-1 rounded-l-full text-black border border-gray-300 focus:outline-none"
+              className="w-full px-3 py-1 text-black focus:outline-none"
             />
             <button
               onClick={buttonClickHandler}
-              className="bg-blue-600 text-white px-4 py-1 rounded-r-full cursor-pointer"
+              className="text-black px-4 py-1"
             >
-              🔍
+              <Search />
             </button>
           </div>
         </div>

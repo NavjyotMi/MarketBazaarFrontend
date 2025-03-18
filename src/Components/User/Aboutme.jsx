@@ -102,26 +102,27 @@ function Aboutme() {
     setEdit((prev) => !prev);
   }
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-50 p-4">
-      <div className="max-w-md w-full bg-white shadow-lg rounded-2xl p-6 space-y-6">
+    <div className="flex justify-center items-center min-h-screen bg-gray-100 p-6">
+      <div className="max-w-lg w-full bg-white shadow-xl rounded-2xl p-8 space-y-8">
         {data && (
-          <div className="space-y-4">
+          <div className="space-y-6">
+            {/* Personal Information Section */}
             <div className="flex justify-between items-center">
-              <h2 className="text-xl font-semibold text-gray-700">
+              <h2 className="text-2xl font-semibold text-gray-800">
                 Personal Information
               </h2>
               <button
                 name="name"
                 onClick={editButtonHandler}
-                className="text-blue-500 hover:text-blue-700 text-sm"
+                className="text-blue-600 hover:text-blue-800 text-sm font-medium transition"
               >
                 Edit
               </button>
             </div>
-            <div className="space-y-2">
+            <div className="space-y-3">
               <input
                 type="text"
-                className="w-full border rounded-md p-2 text-sm"
+                className="w-full border border-gray-300 rounded-md p-3 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                 name="fname"
                 onChange={ChangeHandler}
                 disabled={!(Edit && buttonClicked === "name")}
@@ -130,7 +131,7 @@ function Aboutme() {
               />
               <input
                 type="text"
-                className="w-full border rounded-md p-2 text-sm"
+                className="w-full border border-gray-300 rounded-md p-3 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                 name="lname"
                 onChange={ChangeHandler}
                 disabled={!(Edit && buttonClicked === "name")}
@@ -139,7 +140,7 @@ function Aboutme() {
               />
               {Edit && buttonClicked === "name" && (
                 <button
-                  className="w-full py-2 bg-blue-500 text-white rounded-md text-sm mt-2 hover:bg-blue-600 transition"
+                  className="w-full py-3 bg-blue-600 text-white rounded-lg text-sm font-medium mt-2 hover:bg-blue-700 transition"
                   onClick={saveButtonHandler}
                 >
                   Save
@@ -148,45 +149,61 @@ function Aboutme() {
             </div>
           </div>
         )}
+
+        {/* Email Section */}
         <div className="space-y-4">
-          <h2 className="text-lg font-semibold text-gray-700">Email Address</h2>
+          <h2 className="text-lg font-semibold text-gray-800">Email Address</h2>
           <input
             type="text"
             name="email"
-            className="w-full border rounded-md p-2 text-sm"
+            className="w-full border border-gray-300 bg-gray-100 rounded-md p-3 text-sm text-gray-500 cursor-not-allowed"
             disabled
             value={value.email}
           />
         </div>
-        <div className="space-y-4">
+
+        {/* Address Section */}
+        <div className="space-y-6">
           <div className="flex justify-between items-center">
-            <h2 className="text-lg font-semibold text-gray-700">Address</h2>
+            <h2 className="text-lg font-semibold text-gray-800">Address</h2>
             <button
               name="address"
               onClick={editButtonHandler}
-              className="text-blue-500 hover:text-blue-700 text-sm"
+              className="text-blue-600 hover:text-blue-800 text-sm font-medium transition"
             >
               Edit
             </button>
           </div>
+
           {!Edit && data?.user?.address && (
-            <div className="text-sm space-y-1 text-gray-600">
-              <div>Street: {userAddress.street}</div>
-              <div>City: {userAddress.city}</div>
-              <div>State: {userAddress.state}</div>
-              <div>Zipcode: {userAddress.zipCode}</div>
-              <div>Country: {userAddress.country}</div>
+            <div className="text-sm space-y-2 text-gray-600 bg-gray-50 p-4 rounded-md">
+              <div>
+                <strong>Street:</strong> {userAddress.street}
+              </div>
+              <div>
+                <strong>City:</strong> {userAddress.city}
+              </div>
+              <div>
+                <strong>State:</strong> {userAddress.state}
+              </div>
+              <div>
+                <strong>Zipcode:</strong> {userAddress.zipCode}
+              </div>
+              <div>
+                <strong>Country:</strong> {userAddress.country}
+              </div>
             </div>
           )}
+
           {Edit && buttonClicked === "address" && (
-            <div className="space-y-2">
+            <div className="space-y-3">
               {["street", "city", "state", "zipCode", "country"].map(
                 (field, key) => (
                   <input
                     key={key}
                     name={field}
                     type={field === "zipCode" ? "number" : "text"}
-                    className="w-full border rounded-md p-2 text-sm"
+                    className="w-full border border-gray-300 rounded-md p-3 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                     placeholder={field.charAt(0).toUpperCase() + field.slice(1)}
                     onChange={addChangeHandler}
                     value={userAddress[field]}
@@ -194,7 +211,7 @@ function Aboutme() {
                 )
               )}
               <button
-                className="w-full py-2 bg-blue-500 text-white rounded-md text-sm mt-2 hover:bg-blue-600 transition"
+                className="w-full py-3 bg-blue-600 text-white rounded-lg text-sm font-medium mt-2 hover:bg-blue-700 transition"
                 onClick={saveButtonHandler}
               >
                 Save

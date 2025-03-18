@@ -71,32 +71,38 @@ const Login = () => {
     <>
       <WrapperAuth>
         <div className="WrapperAuth">
-          <h1>.LOGIN</h1>
-          <form onSubmit={submitHandler}>
-            <input
-              type="text"
-              placeholder="Enter the email"
-              name="email"
-              onChange={formHandler}
-              value={formData.email}
-            />
-            <input
-              type="password"
-              placeholder="Enter the password"
-              onChange={formHandler}
-              name="password"
-              value={formData.password}
-            />
-            <button>.LOGIN</button>
-          </form>
-          <div className="text-center mt-4">
-            <span className="text-gray-600">Not a user?</span>
-            <Link
-              to="/signup"
-              className="text-blue-500 font-semibold hover:underline ml-1 transition duration-300"
-            >
-              Signup
-            </Link>
+          <div className="innerclass">
+            <h1 className="logo">.MARKETBAZAAR</h1>
+            <h3>Welcome back!!!</h3>
+            <h2>Sign in</h2>
+            <form onSubmit={submitHandler}>
+              <input
+                type="text"
+                placeholder="Enter the email"
+                name="email"
+                onChange={formHandler}
+                value={formData.email}
+              />
+              <input
+                type="password"
+                placeholder="Enter the password"
+                onChange={formHandler}
+                name="password"
+                value={formData.password}
+              />
+              <div className="btnclass">
+                <button>.Sign in</button>
+              </div>
+            </form>
+            <div className="text-center mt-4">
+              <span className="text-gray-400">Not a user?</span>
+              <Link
+                to="/signup"
+                className="text-blue-500 font-semibold hover:underline ml-1 transition duration-300"
+              >
+                Signup
+              </Link>
+            </div>
           </div>
         </div>
       </WrapperAuth>

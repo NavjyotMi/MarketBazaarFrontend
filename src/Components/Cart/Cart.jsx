@@ -6,11 +6,14 @@ import {
 import { useParams } from "react-router-dom";
 import CartCard from "./CartCard";
 import { useAddOrderMutation } from "../../Redux/features/Order/OrderApi";
+import { useSelector } from "react-redux";
 function Cart() {
-  const id = useParams();
+  // const id = useParams();
   const [payment, setPayment] = useState(false);
+  const id = useSelector((state) => state.user.id);
+  console.log(id);
 
-  const { data, isError, error, refetch } = useGetCartQuery(id.id);
+  const { data, isError, error, refetch } = useGetCartQuery(id);
   const [deleteCart] = useDeleteCartMutation();
   const [addOrder] = useAddOrderMutation();
   if (data) console.log(data);
@@ -82,6 +85,7 @@ function Cart() {
       // setPayment(false);
     }
   }, [payment]);
+
   function checkaddress() {
     if (data.userAdd) {
       openRazorpay();
