@@ -2,18 +2,9 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useAddCartMutation } from "../../Redux/features/Cart/cartApi";
-import { ShoppingCart } from "lucide-react";
+import { FiShoppingCart } from "react-icons/fi";
 function Card(props) {
-  // let string = "Not reviewed yet";
-  // console.log("this is card ", props);
   const userid = useSelector((state) => state.user.id);
-  // console.log(userid);
-  // if (props.review?.length === !0) {
-  //   string = "";
-  //   for (let i = 0; i < props.review.length(); i++) {
-  //     string.concat("★");
-  //   }
-  // }
 
   const [addCart] = useAddCartMutation();
 
@@ -68,7 +59,7 @@ function Card(props) {
                 }}
                 className=" cursor-pointer hover:text-purple-500"
               >
-                <ShoppingCart strokeWidth={1.25} hover:stroke-purple-500 />
+                <FiShoppingCart size={22} className="hover:stroke-purple-500" />
               </button>
             </div>
           </div>

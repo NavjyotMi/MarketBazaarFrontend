@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { setUser } from "../Redux/features/users/UserSlice";
 import { Search } from "lucide-react";
+import { FaSearch } from "react-icons/fa";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -69,7 +70,7 @@ const Navbar = () => {
                 className=" text-black px-4 py-1 rounded-r-full cursor-pointer"
                 onClick={buttonClickHandler}
               >
-                <Search />
+                <FaSearch />
               </button>
             </div>
           </div>
@@ -140,7 +141,7 @@ const Navbar = () => {
             className="sm:hidden flex justify-center items-center text-gray-500 hover:text-gray-700"
             onClick={() => setIsSearchOpen(!isSearchOpen)}
           >
-            <Search />
+            <FaSearch />
           </button>
           <div className="flex md:hidden items-center">
             <button

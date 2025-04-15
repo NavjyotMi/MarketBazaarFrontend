@@ -3,12 +3,11 @@ import {
   useDeleteCartMutation,
   useGetCartQuery,
 } from "../../Redux/features/Cart/cartApi";
-import { useParams } from "react-router-dom";
+
 import CartCard from "./CartCard";
 import { useAddOrderMutation } from "../../Redux/features/Order/OrderApi";
 import { useSelector } from "react-redux";
 function Cart() {
-  // const id = useParams();
   const [payment, setPayment] = useState(false);
   const id = useSelector((state) => state.user.id);
   console.log(id);

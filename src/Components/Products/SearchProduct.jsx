@@ -3,7 +3,7 @@ import { useSearchParams } from "react-router-dom";
 import { useGetSearchedProductQuery } from "../../Redux/features/products/ProductApi";
 import Card from "../utils/Card";
 import ValueBar from "../utils/ValueBar";
-import { useSelector } from "react-redux";
+
 function SearchProduct() {
   const [searchParams] = useSearchParams();
   const queryString = Array.from(searchParams.entries())

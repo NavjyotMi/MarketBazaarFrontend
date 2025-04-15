@@ -1,18 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { productSchema } from "../../Schemas/ProductSchema";
 import { useSelector } from "react-redux";
 import { useCreateProductMutation } from "../../Redux/features/products/ProductApi";
-// what should be there for the product
-//  {
-//     price:,
-//     name:,
-//     description,
-//     imageUrl,
-//     stock,
-//     seller,
-//     category
-//  }
-// useSelector();
+
 function CreateProduct() {
   const sellerId = useSelector((state) => state.user.id);
   const [productData, setProductData] = useState({
