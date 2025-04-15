@@ -4,7 +4,6 @@ import {
   useGetSearchedProductQuery,
 } from "../Redux/features/products/ProductApi";
 import Card from "./utils/Card";
-import ValueBar from "./utils/ValueBar";
 import { useSearchParams } from "react-router-dom";
 import Description from "./Description";
 import im from "../assets/single.webp";

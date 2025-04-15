@@ -1,6 +1,6 @@
 import React from "react";
 import payments from "../assets/payments.png";
-import { Facebook, Twitter, Instagram } from "lucide-react";
+import { FaInstagram, FaTwitter, FaFacebook } from "react-icons/fa";
 
 function Footer() {
   return (
@@ -91,18 +91,16 @@ function Footer() {
                   987988789
                 </a>
                 <div className="flex gap-3 mt-2">
-                  <Facebook
-                    strokeWidth={1}
-                    className="cursor-pointer hover:text-gray-200"
-                  />
-                  <Twitter
-                    strokeWidth={1}
-                    className="cursor-pointer hover:text-gray-200"
-                  />
-                  <Instagram
-                    strokeWidth={1}
-                    className="cursor-pointer hover:text-gray-200"
-                  />
+                  <div className="cursor-pointer">
+                    <FaFacebook size={22} className=" hover:text-gray-200" />
+                  </div>
+                  <div className="cursor-pointer">
+                    <FaTwitter size={22} className=" hover:text-gray-200" />
+                  </div>
+
+                  <div className="cursor-pointer">
+                    <FaInstagram size={22} className=" hover:text-gray-200" />
+                  </div>
                 </div>
               </div>
             </div>

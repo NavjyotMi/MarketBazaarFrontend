@@ -3,8 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { setUser } from "../Redux/features/users/UserSlice";
 import { Search } from "lucide-react";
-import { ShoppingCart } from "lucide-react";
-import { Heart } from "lucide-react";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -122,10 +120,7 @@ const Navbar = () => {
               </Link>
             )}
             {!user && (
-              <Link
-                to="/login"
-                className="relative group text-gray-700 text-black"
-              >
+              <Link to="/login" className="relative group text-gray-700">
                 Login
                 <span className="absolute left-0 bottom-0 w-full h-[2px] bg-gray-900 transform scale-x-0 origin-left transition-all duration-300 group-hover:scale-x-100"></span>
               </Link>
@@ -134,7 +129,7 @@ const Navbar = () => {
               <Link
                 to="/"
                 onClick={logoutHandler}
-                className="relative group text-black text-gray-700  "
+                className="relative group  text-gray-700  "
               >
                 Logout
                 <span className="absolute left-0 bottom-0 w-full h-[2px] bg-gray-900 transform scale-x-0 origin-left transition-all duration-300 group-hover:scale-x-100"></span>
