@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { setUser } from "../Redux/features/users/UserSlice";
-import { Search } from "lucide-react";
 import { FaSearch } from "react-icons/fa";
 
 const Navbar = () => {
@@ -181,7 +180,7 @@ const Navbar = () => {
               onClick={buttonClickHandler}
               className="text-black px-4 py-1"
             >
-              <Search />
+              <FaSearch />
             </button>
           </div>
         </div>
